@@ -1,13 +1,47 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>ViewExpenses</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="view-expenses-content">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ViewExpenses</ion-title>
-    </ion-toolbar>
-  </ion-header>
+ 
+  <div class="expenses-wrapper">
+
+    <ion-header class="back-header">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/dashboard" icon="arrow-back-outline" text=""></ion-back-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <p class="welcome">Welcome, {{ name }}</p>
+    <h2 class="page-title">All Expenses & Incomes</h2>
+    <hr class="divider" />
+
+    <div class="table-header">
+      <span class="col">ID</span>
+      <span class="col">Price</span>
+      <span class="col">Date</span>
+    </div>
+
+    <div *ngFor="let t of transactions; let i = index" class="table-row" [ngClass]="{ 'odd': i % 2 === 1 }">
+      <span class="col id-col" [ngClass]="t.type === 'income' ? 'income' : 'expense'">
+        {{ t.type === 'income' ? '+' : '-' }}{{ t.name }}
+      </span>
+      <span class="col">€{{ t.amount }}</span>
+      <span class="col date-col">
+        {{ t.date | date:'dd/MM/yyyy' }}
+        <ion-icon
+          name="trash-outline"
+          class="trash-icon"
+          (click)="deleteTransaction(i)">
+        </ion-icon>
+       
+
+      </span>
+    </div>
+    
+
+    <div class="action-buttons">
+      <ion-button class="yellow-btn" routerLink="/add-income">Add Income</ion-button>
+      <ion-button class="yellow-btn" routerLink="/add-expense">Add Expense</ion-button>
+    </div>
+
+  </div>
 </ion-content>

@@ -1,0 +1,118 @@
+.view-expenses-content {
+    --background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 16px;
+  }
+  
+  .expenses-wrapper {
+    width: 100%;
+    max-width: 420px;
+  }
+  
+  .welcome {
+    text-align: center;
+    font-size: 16px;
+    color: #000;
+    margin-top: 6px;
+  }
+  
+  .page-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #000;
+  }
+  
+  .divider {
+    border-top: 1px dotted #aaa;
+    margin-bottom: 12px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #111;
+    color: #7cff6d;
+    font-weight: bold;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .table-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 14px;
+    font-size: 14px;
+    align-items: center;
+    background-color: #afafaf;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table-row.odd {
+    background-color: #dcdcdc;
+  }
+  
+  .col {
+    flex: 1;
+    text-align: center;
+    word-break: break-word;
+  }
+  
+  .col.income {
+    color: green;
+  }
+  
+  .col.expense {
+    color: red;
+  }
+  
+  .date {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .trash-icon {
+  font-size: 20px;
+  color: #ff0000;        // Bright red
+  margin-left: 8px;
+  cursor: pointer;
+  opacity: 1 !important; // Force full visibility
+  pointer-events: auto;  // Ensure it's clickable
+}
+
+
+  
+.date-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    overflow: visible;     // Make sure icon isn’t cut off
+  }
+  
+  .action-buttons {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+  }
+  
+  .yellow-btn {
+    --background: #ffee00;
+    --color: #000;
+    --border-radius: 12px;
+    font-weight: bold;
+    min-width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
