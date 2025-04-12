@@ -1,20 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {
+  
+  IonicModule
+} from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 
 @Component({
+  standalone: true,
   selector: 'app-start',
   templateUrl: './start.page.html',
   styleUrls: ['./start.page.scss'],
-  standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    
+  ],
 })
-export class StartPage implements OnInit {
+export class StartPage {
+  name: string = '';
+  income: number | null = null;
+  goal: number | null = null;
 
-  constructor() { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
+  startCalculation() {
+    if (this.name && this.income !== null && this.goal !== null) {
+      localStorage.setItem('name', this.name);
+      localStorage.setItem('income', this.income.toString());
+      localStorage.setItem('goal', this.goal.toString());
+      this.router.navigateByUrl('/dashboard');
+    } else {
+      alert('Please fill in all fields.');
+    }
   }
-
 }
