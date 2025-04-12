@@ -1,13 +1,58 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="dashboard-content">
+  <div class="dashboard-wrapper">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Dashboard</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <p class="welcome">Welcome, {{ name }}</p>
+    <h2 class="heading">Calculation</h2>
+    <hr class="divider" />
+
+    <div class="summary-cards">
+      <div class="summary-card">
+        <h3>INCOME</h3>
+        <p>€{{ income }}</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>MONTHLY GOAL</h3>
+        <p>€{{ goal }}</p>
+      </div>
+
+      <div class="summary-card">
+        <h3>AMOUNT AFTER GOAL</h3>
+        <p>€{{ remaining }}</p>
+      </div>
+    </div>
+
+    <div class="chart-container">
+      <svg width="160" height="160" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" class="bg" />
+        <circle cx="50" cy="50" r="45" class="fg"
+                [attr.stroke-dasharray]="spentPercent + ', 100'" />
+        <text x="50%" y="50%" text-anchor="middle" dy=".3em" class="chart-text">
+          <tspan x="50%" dy="0">{{ spentPercent }}%</tspan>
+          <tspan x="50%" dy="1.2em">Spent</tspan>
+        </text>
+      </svg>
+    </div>
+
+    <div class="totals-row">
+      <div class="total available">
+        <p class="label">AVAILABLE</p>
+        <p class="amount">€{{ remaining }}</p>
+      </div>
+      <div class="total spent">
+        <p class="label">SPENT</p>
+        <p class="amount">€{{ spent }}</p>
+      </div>
+    </div>
+
+    <div class="buttons-row">
+      <ion-button expand="block" class="yellow-btn" routerLink="/add-expense">Add Expenses</ion-button>
+      <ion-button expand="block" class="yellow-btn" routerLink="/add-income">Add Income</ion-button>
+    </div>
+
+    <ion-button expand="block" class="view-btn" routerLink="/view-expenses">
+      View Expenses
+    </ion-button>
+
+  </div>
 </ion-content>
