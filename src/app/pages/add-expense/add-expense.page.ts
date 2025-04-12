@@ -1,20 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+import { IonicModule} from '@ionic/angular';
 
 @Component({
+  standalone: true,
   selector: 'app-add-expense',
   templateUrl: './add-expense.page.html',
   styleUrls: ['./add-expense.page.scss'],
-  standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule
+  ]
 })
-export class AddExpensePage implements OnInit {
+export class AddExpensePage {
+  name: string = '';
+  amount: number | null = null;
+  date: string = '';
 
-  constructor() { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
+  addExpense() {
+    if (this.name && this.amount !== null && this.date) {
+      const newExpense = {
+        type: 'expense',
+        name: this.name,
+        amount: this.amount,
+        date: this.date
+      };
+
+      const stored = JSON.parse(localStorage.getItem('transactions') || '[]');
+      stored.push(newExpense);
+      localStorage.setItem('transactions', JSON.stringify(stored));
+
+      this.router.navigateByUrl('/dashboard');
+    } else {
+      alert('Please fill in all fields.');
+    }
   }
-
 }

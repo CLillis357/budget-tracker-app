@@ -1,6 +1,14 @@
 <ion-content class="dashboard-content">
   <div class="dashboard-wrapper">
 
+    <ion-header class="back-header">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/start" icon="arrow-back-outline" text=""></ion-back-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
     <p class="welcome">Welcome, {{ name }}</p>
     <h2 class="heading">Calculation</h2>
     <hr class="divider" />

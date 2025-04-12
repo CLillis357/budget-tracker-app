@@ -1,0 +1,53 @@
+.add-expense-content {
+    --background: #1c1c1c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 16px;
+  }
+  
+  .form-wrapper {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .page-title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .divider {
+    border-top: 1px dotted #aaa;
+    margin-bottom: 20px;
+  }
+  
+  ion-item {
+    background: transparent;
+    color: #ccc;
+    margin-bottom: 16px;
+    --highlight-color-focused: #ffaa00;
+  }
+  
+  ion-label {
+    color: #ccc;
+  }
+  
+  ion-input, ion-datetime {
+    color: #fff;
+  }
+  
+  .add-btn {
+    --background: #ffee00;
+    --color: #000;
+    --border-radius: 12px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
