@@ -1,6 +1,7 @@
 <ion-content class="dashboard-content">
   <div class="dashboard-wrapper">
 
+    <!-- Back Button -->
     <ion-header class="back-header">
       <ion-toolbar>
         <ion-buttons slot="start">
@@ -9,14 +10,16 @@
       </ion-toolbar>
     </ion-header>
 
+    <!-- Welcome & Header -->
     <p class="welcome">Welcome, {{ name }}</p>
     <h2 class="heading">Calculation</h2>
     <hr class="divider" />
 
+    <!-- Summary Cards -->
     <div class="summary-cards">
       <div class="summary-card">
         <h3>INCOME</h3>
-        <p>€{{ income }}</p>
+        <p>€{{ income + additionalIncome }}</p>
       </div>
 
       <div class="summary-card">
@@ -30,11 +33,17 @@
       </div>
     </div>
 
+    <!-- Circular Chart -->
     <div class="chart-container">
       <svg width="160" height="160" viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="45" class="bg" />
-        <circle cx="50" cy="50" r="45" class="fg"
-                [attr.stroke-dasharray]="spentPercent + ', 100'" />
+        <circle
+          cx="50"
+          cy="50"
+          r="45"
+          class="fg"
+          [attr.stroke-dasharray]="animatedPercent + ', 100'"
+        />
         <text x="50%" y="50%" text-anchor="middle" dy=".3em" class="chart-text">
           <tspan x="50%" dy="0">{{ spentPercent }}%</tspan>
           <tspan x="50%" dy="1.2em">Spent</tspan>
@@ -42,6 +51,7 @@
       </svg>
     </div>
 
+    <!-- Totals -->
     <div class="totals-row">
       <div class="total available">
         <p class="label">AVAILABLE</p>
@@ -53,6 +63,7 @@
       </div>
     </div>
 
+    <!-- Action Buttons -->
     <div class="buttons-row">
       <ion-button expand="block" class="yellow-btn" routerLink="/add-expense">Add Expenses</ion-button>
       <ion-button expand="block" class="yellow-btn" routerLink="/add-income">Add Income</ion-button>
