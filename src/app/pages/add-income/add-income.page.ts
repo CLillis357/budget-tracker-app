@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { inject } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -20,9 +22,11 @@ export class AddIncomePage {
   amount: number | null = null;
   date: string = '';
 
+  firestore: Firestore = inject(Firestore);
+
   constructor(private router: Router) {}
 
-  addIncome() {
+  async addIncome() {
     if (this.name && this.amount !== null && this.date) {
       const newIncome = {
         type: 'income',
@@ -31,11 +35,15 @@ export class AddIncomePage {
         date: this.date
       };
 
-      const stored = JSON.parse(localStorage.getItem('transactions') || '[]');
-      stored.push(newIncome);
-      localStorage.setItem('transactions', JSON.stringify(stored));
-
-      this.router.navigateByUrl('/dashboard');
+      try {
+        const ref = collection(this.firestore, 'transactions');
+        await addDoc(ref, newIncome);
+        console.log('Income added to Firestore:', newIncome);
+        this.router.navigateByUrl('/dashboard');
+      } catch (error) {
+        console.error('Error adding income:', error);
+        alert('Failed to add income. Please try again.');
+      }
     } else {
       alert('Please fill in all fields.');
     }

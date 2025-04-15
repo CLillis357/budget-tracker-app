@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { inject } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -20,9 +22,11 @@ export class AddExpensePage {
   amount: number | null = null;
   date: string = '';
 
+  firestore: Firestore = inject(Firestore);
+
   constructor(private router: Router) {}
 
-  addExpense() {
+  async addExpense() {
     if (this.name && this.amount !== null && this.date) {
       const newExpense = {
         type: 'expense',
@@ -31,11 +35,15 @@ export class AddExpensePage {
         date: this.date
       };
 
-      const stored = JSON.parse(localStorage.getItem('transactions') || '[]');
-      stored.push(newExpense);
-      localStorage.setItem('transactions', JSON.stringify(stored));
-
-      this.router.navigateByUrl('/dashboard');
+      try {
+        const ref = collection(this.firestore, 'transactions');
+        await addDoc(ref, newExpense);
+        console.log('Expense added to Firestore:', newExpense);
+        this.router.navigateByUrl('/dashboard');
+      } catch (error) {
+        console.error('Error adding expense:', error);
+        alert('Failed to add expense. Please try again.');
+      }
     } else {
       alert('Please fill in all fields.');
     }
