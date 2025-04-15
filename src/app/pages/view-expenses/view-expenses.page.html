@@ -1,6 +1,4 @@
 <ion-content class="view-expenses-content">
-
- 
   <div class="expenses-wrapper">
 
     <ion-header class="back-header">
@@ -10,6 +8,7 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+
     <p class="welcome">Welcome, {{ name }}</p>
     <h2 class="page-title">All Expenses & Incomes</h2>
     <hr class="divider" />
@@ -30,13 +29,10 @@
         <ion-icon
           name="trash-outline"
           class="trash-icon"
-          (click)="deleteTransaction(i)">
+          (click)="deleteTransaction(t.id)">
         </ion-icon>
-       
-
       </span>
     </div>
-    
 
     <div class="action-buttons">
       <ion-button class="yellow-btn" routerLink="/add-income">Add Income</ion-button>
