@@ -76,9 +76,22 @@
   
   circle.fg {
     fill: none;
-    stroke: #999;
+    stroke-width: 10;
+    stroke-linecap: butt;
+    transition: stroke 0.3s ease;
+  }
+
+  .fg-ring {
+    fill: none;
     stroke-width: 10;
     stroke-linecap: round;
+    transition: stroke-dashoffset 0.3s ease-out;
+  }
+
+  .progress-circle {
+    width: 160px;
+    height: 160px;
+    transform: rotate(-90deg); // Starts arc from top
   }
   
   .chart-text {
@@ -159,5 +172,11 @@
     margin-top: 10px;
    
     min-width: 300px;
+  }
+
+  .bg {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 10;
   }
   

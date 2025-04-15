@@ -42,7 +42,9 @@
           cy="50"
           r="45"
           class="fg"
-          [attr.stroke-dasharray]="animatedPercent + ', 100'"
+         [attr.stroke-dasharray]="circumference"
+         [attr.stroke-dashoffset]="circumference - (circumference * animatedPercent / 100)"
+         [attr.stroke]="progressColor"
         />
         <text x="50%" y="50%" text-anchor="middle" dy=".3em" class="chart-text">
           <tspan x="50%" dy="0">{{ spentPercent }}%</tspan>
@@ -50,6 +52,8 @@
         </text>
       </svg>
     </div>
+    
+    
 
     <!-- Totals -->
     <div class="totals-row">
