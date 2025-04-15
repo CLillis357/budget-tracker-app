@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 
 @Component({
@@ -11,11 +12,7 @@ import { inject } from '@angular/core';
   selector: 'app-add-expense',
   templateUrl: './add-expense.page.html',
   styleUrls: ['./add-expense.page.scss'],
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule
-  ]
+  imports: [CommonModule, FormsModule, IonicModule]
 })
 export class AddExpensePage {
   name: string = '';
@@ -23,20 +20,28 @@ export class AddExpensePage {
   date: string = '';
 
   firestore: Firestore = inject(Firestore);
+  auth: Auth = inject(Auth);
 
   constructor(private router: Router) {}
 
   async addExpense() {
-    if (this.name && this.amount !== null && this.date) {
-      const newExpense = {
-        type: 'expense',
-        name: this.name,
-        amount: this.amount,
-        date: this.date
-      };
+    if (!this.name || this.amount === null || !this.date) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    const newExpense = {
+      type: 'expense',
+      name: this.name,
+      amount: this.amount,
+      date: this.date
+    };
+
+    onAuthStateChanged(this.auth, async (user) => {
+      if (!user) return;
 
       try {
-        const ref = collection(this.firestore, 'transactions');
+        const ref = collection(this.firestore, `users/${user.uid}/transactions`);
         await addDoc(ref, newExpense);
         console.log('Expense added to Firestore:', newExpense);
         this.router.navigateByUrl('/dashboard');
@@ -44,8 +49,6 @@ export class AddExpensePage {
         console.error('Error adding expense:', error);
         alert('Failed to add expense. Please try again.');
       }
-    } else {
-      alert('Please fill in all fields.');
-    }
+    });
   }
 }

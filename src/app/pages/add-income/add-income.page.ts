@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 
 @Component({
@@ -23,6 +24,7 @@ export class AddIncomePage {
   date: string = '';
 
   firestore: Firestore = inject(Firestore);
+  auth: Auth = inject(Auth);
 
   constructor(private router: Router) {}
 
@@ -36,7 +38,10 @@ export class AddIncomePage {
       };
 
       try {
-        const ref = collection(this.firestore, 'transactions');
+        const user = this.auth.currentUser;
+        if (!user) return;
+
+        const ref = collection(this.firestore, `users/${user.uid}/transactions`);
         await addDoc(ref, newIncome);
         console.log('Income added to Firestore:', newIncome);
         this.router.navigateByUrl('/dashboard');

@@ -7,6 +7,7 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { firebaseConfig } from './environments/firebase.config';
 import { defineCustomElements } from '@ionic/core/loader';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 defineCustomElements(window);
 
 document.body.setAttribute('color-theme', 'dark');
@@ -17,6 +18,7 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth())
   ],
 });

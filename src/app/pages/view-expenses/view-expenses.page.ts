@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { Firestore, collection, collectionData, deleteDoc, doc } from '@angular/fire/firestore';
+import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 
 interface Transaction {
@@ -24,24 +25,30 @@ export class ViewExpensesPage implements OnInit {
   transactions: Transaction[] = [];
   name: string = '';
   firestore: Firestore = inject(Firestore);
+  auth: Auth = inject(Auth);
 
   ngOnInit() {
-    this.name = localStorage.getItem('name') || 'User';
+    const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+    this.name = profile.name || 'User';
     this.loadTransactions();
   }
 
   loadTransactions() {
-    const ref = collection(this.firestore, 'transactions');
-    collectionData(ref, { idField: 'id' }).subscribe((data) => {
-      this.transactions = (data as Transaction[]).sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
+    onAuthStateChanged(this.auth, (user) => {
+      if (!user) return;
+
+      const ref = collection(this.firestore, `users/${user.uid}/transactions`);
+      collectionData(ref, { idField: 'id' }).subscribe((data) => {
+        this.transactions = (data as Transaction[]).sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+      });
     });
   }
 
   async deleteTransaction(id: string) {
     try {
-      const docRef = doc(this.firestore, `transactions/${id}`);
+      const docRef = doc(this.firestore, `users/${this.auth.currentUser?.uid}/transactions/${id}`);
       await deleteDoc(docRef);
       console.log('Deleted transaction:', id);
     } catch (error) {
