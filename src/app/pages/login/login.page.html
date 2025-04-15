@@ -1,0 +1,22 @@
+<ion-content class="login-content">
+
+  <div class="login-wrapper">
+
+    <h1 class="title">Budget Tracker</h1>
+
+    <ion-item lines="inset">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input [(ngModel)]="email" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="inset">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input [(ngModel)]="password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" class="login-btn" (click)="login()">Login</ion-button>
+    <ion-button expand="block" class="register-btn" (click)="goToRegister()">Register</ion-button>
+
+  </div>
+
+</ion-content>
