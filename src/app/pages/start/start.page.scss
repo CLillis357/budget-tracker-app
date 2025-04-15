@@ -43,7 +43,7 @@
   }
   
   ion-input {
-    color: #fff;
+    color: #000000;
     --placeholder-color: #aaa;
   }
   
@@ -54,4 +54,34 @@
     --border-radius: 12px;
     font-weight: bold;
   }
+
+  .progress-ring {
+    transform: rotate(-90deg);
+    margin: auto;
+    display: block;
+  }
+  
+  .bg-ring {
+    fill: none;
+    stroke: #444;
+    stroke-width: 10;
+  }
+  
+  .fg-ring {
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.8s ease-out, stroke 0.3s ease-in;
+  }
+  
+  .chart-text {
+    fill: white;
+    font-size: 1.1em;
+  }
+  
+  .chart-subtext {
+    fill: #ccc;
+    font-size: 0.6em;
+  }
+  
   

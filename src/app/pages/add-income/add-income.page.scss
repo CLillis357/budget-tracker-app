@@ -9,7 +9,7 @@
   
   .form-wrapper {
     width: 100%;
-    max-width: 380px;
+    //max-width: 380px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,8 +40,8 @@
     color: #ccc;
   }
   
-  ion-input, ion-datetime {
-    color: #fff;
+  ion-input{
+    color: #000000;
   }
   
   .add-btn {
