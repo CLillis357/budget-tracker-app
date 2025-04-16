@@ -15,6 +15,8 @@ import { inject } from '@angular/core';
   styleUrls: ['./start.page.scss'],
   imports: [CommonModule, FormsModule, IonicModule]
 })
+
+// This is the main component class for the page
 export class StartPage implements OnInit {
   name: string = '';
   income: number = 0;
@@ -23,8 +25,12 @@ export class StartPage implements OnInit {
   firestore: Firestore = inject(Firestore);
   auth: Auth = inject(Auth);
 
+  
+  // Dependency injection: brings in required services
   constructor(private router: Router) {}
 
+  
+  // Lifecycle hook that runs when the component loads
   ngOnInit() {
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
     this.name = profile.name || '';
@@ -32,6 +38,8 @@ export class StartPage implements OnInit {
     this.goal = profile.goal || 0;
   }
 
+  
+  // Saves user profile to Firestore and navigates to dashboard
   async startCalculation() {
     if (!this.name || !this.income || !this.goal) {
       alert('Please fill in all fields.');

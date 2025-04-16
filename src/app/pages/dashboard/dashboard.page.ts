@@ -13,6 +13,8 @@ import { inject } from '@angular/core';
   styleUrls: ['./dashboard.page.scss'],
   imports: [CommonModule, IonicModule, RouterModule]
 })
+
+// This is the main component class for the page
 export class DashboardPage implements OnInit {
   name: string = '';
   income: number = 0;
@@ -28,16 +30,24 @@ export class DashboardPage implements OnInit {
   firestore: Firestore = inject(Firestore);
   auth: Auth = inject(Auth);
 
+  
+  // Dependency injection: brings in required services
   constructor(private router: Router) {}
 
+  
+  // Lifecycle hook that runs when the component loads
   ngOnInit() {
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
     this.name = profile.name || 'User';
     this.income = Number(profile.income || 0);
     this.goal = Number(profile.goal || 0);
-    this.loadTransactions();
+    this.
+  // Loads all transactions for the logged-in user
+  loadTransactions();
   }
 
+  
+  // Loads all transactions for the logged-in user
   loadTransactions() {
     onAuthStateChanged(this.auth, (user) => {
       if (!user) return;
@@ -88,6 +98,8 @@ export class DashboardPage implements OnInit {
     }, interval);
   }
 
+  
+  // Signs the user out and clears local storage
   async logout() {
     try {
       await signOut(this.auth);

@@ -18,6 +18,8 @@ import { inject } from '@angular/core';
     IonicModule
   ]
 })
+
+// This is the main component class for the page
 export class LoginPage {
   email: string = '';
   password: string = '';
@@ -25,8 +27,12 @@ export class LoginPage {
   auth: Auth = inject(Auth);
   firestore: Firestore = inject(Firestore);
 
+  
+  // Dependency injection: brings in required services
   constructor(private router: Router) {}
 
+  
+  // Handles user login and profile loading
   async login() {
     if (!this.email || !this.password) {
       alert('Please enter both email and password.');

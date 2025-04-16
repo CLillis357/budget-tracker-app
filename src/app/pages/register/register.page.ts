@@ -13,6 +13,8 @@ import { inject } from '@angular/core';
   styleUrls: ['./register.page.scss'],
   imports: [CommonModule, FormsModule, IonicModule],
 })
+
+// This is the main component class for the page
 export class RegisterPage {
   email: string = '';
   password: string = '';
@@ -20,8 +22,12 @@ export class RegisterPage {
 
   auth: Auth = inject(Auth);
 
+  
+  // Dependency injection: brings in required services
   constructor(private router: Router) {}
 
+  
+  // Handles user registration with Firebase Auth
   async register() {
     if (!this.email || !this.password || !this.confirmPassword) {
       alert('Please fill in all fields.');

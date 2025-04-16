@@ -21,6 +21,8 @@ interface Transaction {
   styleUrls: ['./view-expenses.page.scss'],
   imports: [CommonModule, IonicModule, RouterModule]
 })
+
+// This is the main component class for the page
 export class ViewExpensesPage implements OnInit {
   transactions: Transaction[] = [];
   name: string = '';
@@ -30,32 +32,49 @@ export class ViewExpensesPage implements OnInit {
   firestore: Firestore = inject(Firestore);
   auth: Auth = inject(Auth);
 
+  
+  // Lifecycle hook that runs when the component loads
   ngOnInit() {
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
     this.name = profile.name || 'User';
-    this.loadTransactions();
+    this.
+  // Loads all transactions for the logged-in user
+  loadTransactions();
   }
 
-  loadTransactions() {
-    onAuthStateChanged(this.auth, (user) => {
-      if (!user) return;
+  
+  
+  // Loads all transactions from Firestore for the currently logged-in user
+loadTransactions() {
+  // Wait for the user's auth state to be fully loaded
+  onAuthStateChanged(this.auth, (user) => {
+    if (!user) return; 
 
-      const ref = collection(this.firestore, `users/${user.uid}/transactions`);
-      collectionData(ref, { idField: 'id' }).subscribe((data) => {
-        const txs = data as Transaction[];
-        this.transactions = txs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    // Reference the Firestore collection for this user's transactions
+    const ref = collection(this.firestore, `users/${user.uid}/transactions`);
 
-        this.totalIncome = txs
-          .filter(t => t.type === 'income')
-          .reduce((sum, t) => sum + Number(t.amount), 0);
+    // Listen to changes in the user's transactions collection
+    collectionData(ref, { idField: 'id' }).subscribe((data) => {
+      // Cast the data to expected Transaction[] structure
+      const txs = data as Transaction[];
 
-        this.totalExpenses = txs
-          .filter(t => t.type === 'expense')
-          .reduce((sum, t) => sum + Number(t.amount), 0);
-      });
+      // Sort transactions by date (most recent first)
+      this.transactions = txs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+      // Calculate the total income by summing all 'income' type amounts
+      this.totalIncome = txs
+        .filter(t => t.type === 'income')
+        .reduce((sum, t) => sum + Number(t.amount), 0);
+
+      // Calculate the total expenses by summing all 'expense' type amounts
+      this.totalExpenses = txs
+        .filter(t => t.type === 'expense')
+        .reduce((sum, t) => sum + Number(t.amount), 0);
     });
-  }
+  });
+}
 
+// Deletes a transaction from Firestore by ID
   async deleteTransaction(id: string) {
     try {
       const docRef = doc(this.firestore, `users/${this.auth.currentUser?.uid}/transactions/${id}`);

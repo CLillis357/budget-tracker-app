@@ -14,6 +14,8 @@ import { inject } from '@angular/core';
   styleUrls: ['./add-expense.page.scss'],
   imports: [CommonModule, FormsModule, IonicModule]
 })
+
+// This is the main component class for the page
 export class AddExpensePage {
   name: string = '';
   amount: number | null = null;
@@ -22,8 +24,12 @@ export class AddExpensePage {
   firestore: Firestore = inject(Firestore);
   auth: Auth = inject(Auth);
 
+  
+  // Dependency injection: brings in required services
   constructor(private router: Router) {}
 
+  
+  // Handles form submission to add an expense
   async addExpense() {
     if (!this.name || this.amount === null || !this.date) {
       alert('Please fill in all fields.');

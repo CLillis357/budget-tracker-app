@@ -18,6 +18,8 @@ import { inject } from '@angular/core';
     IonicModule
   ]
 })
+
+// This is the main component class for the page
 export class AddIncomePage {
   name: string = '';
   amount: number | null = null;
@@ -26,8 +28,12 @@ export class AddIncomePage {
   firestore: Firestore = inject(Firestore);
   auth: Auth = inject(Auth);
 
+  
+  // Dependency injection: brings in required services
   constructor(private router: Router) {}
 
+  
+  // Handles form submission to add income
   async addIncome() {
     if (this.name && this.amount !== null && this.date) {
       const newIncome = {
