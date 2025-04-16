@@ -61,9 +61,16 @@
           [attr.stroke]="progressColor"
         />
         <text x="50%" y="50%" text-anchor="middle" dy=".3em" class="chart-text">
-          <tspan x="50%" dy="0">{{ animatedPercent.toFixed(0) }}%</tspan>
-          <tspan x="50%" dy="1.2em">Spent</tspan>
+          <ng-container *ngIf="remaining > 0; else broke">
+            <tspan x="50%" dy="0">{{ animatedPercent.toFixed(0) }}%</tspan>
+            <tspan x="50%" dy="1.2em">Spent</tspan>
+          </ng-container>
+          <ng-template #broke>
+            <tspan x="50%" dy="0" class="broke-message">YOU HAVE</tspan>
+            <tspan x="50%" dy="10" class="broke-message">NO MONEY!!!</tspan>
+          </ng-template>
         </text>
+        
       </svg>
     </div>
 

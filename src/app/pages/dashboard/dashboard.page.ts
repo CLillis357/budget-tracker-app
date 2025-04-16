@@ -65,11 +65,13 @@ export class DashboardPage implements OnInit {
 
         this.additionalIncome = totalIncomeFromEntries;
         this.spent = Math.max(0, totalExpenses - totalIncomeFromEntries);
-        this.remaining = actualAvailable - this.spent;
+        this.remaining = Math.max(0, actualAvailable - this.spent);
+        ;
 
         this.spentPercent = actualAvailable > 0
-          ? Number(((this.spent / actualAvailable) * 100).toFixed(2))
-          : 0;
+        ? Math.min(100, Number(((this.spent / actualAvailable) * 100).toFixed(2)))
+        : 0;
+      
 
         const hue = 120 - (120 * (this.spentPercent / 100));
         this.progressColor = `hsl(${Math.max(0, hue)}, 100%, 40%)`;
