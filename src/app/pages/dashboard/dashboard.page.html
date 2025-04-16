@@ -1,14 +1,28 @@
-<ion-content class="dashboard-content">
-  <div class="dashboard-wrapper">
+<ion-menu content-id="main-content" side="start" menu-id="main-menu">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item button (click)="goToEditProfile()">Edit Profile</ion-item>
+      <ion-item button (click)="logout()">Logout</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-    <!-- Back Button -->
-    <ion-header class="back-header">
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button defaultHref="/start" icon="arrow-back-outline" text=""></ion-back-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
+<ion-header>
+  <ion-toolbar class="menu-header">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+   
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="main-content" class="dashboard-content">
+  <div class="dashboard-wrapper">
 
     <!-- Welcome & Header -->
     <p class="welcome">Welcome, {{ name }}</p>
@@ -72,8 +86,10 @@
     </div>
 
     <ion-button expand="block" class="view-btn" routerLink="/view-expenses">
-      View Expenses
+      View Expenses & Incomes
     </ion-button>
+   
+    
 
   </div>
 </ion-content>

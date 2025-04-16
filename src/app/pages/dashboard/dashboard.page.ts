@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
-import { Auth, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 import { inject } from '@angular/core';
 
 @Component({
@@ -27,6 +27,8 @@ export class DashboardPage implements OnInit {
 
   firestore: Firestore = inject(Firestore);
   auth: Auth = inject(Auth);
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
@@ -67,6 +69,8 @@ export class DashboardPage implements OnInit {
     });
   }
 
+  
+
   animatePercent() {
     const duration = 1000;
     const steps = 30;
@@ -82,5 +86,20 @@ export class DashboardPage implements OnInit {
         clearInterval(animate);
       }
     }, interval);
+  }
+
+  async logout() {
+    try {
+      await signOut(this.auth);
+      localStorage.clear();
+      this.router.navigateByUrl('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+      alert('Logout failed. Please try again.');
+    }
+  }
+
+  goToEditProfile() {
+    this.router.navigateByUrl('/start');
   }
 }
