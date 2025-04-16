@@ -24,6 +24,9 @@ interface Transaction {
 export class ViewExpensesPage implements OnInit {
   transactions: Transaction[] = [];
   name: string = '';
+  totalIncome: number = 0;
+  totalExpenses: number = 0;
+
   firestore: Firestore = inject(Firestore);
   auth: Auth = inject(Auth);
 
@@ -39,9 +42,16 @@ export class ViewExpensesPage implements OnInit {
 
       const ref = collection(this.firestore, `users/${user.uid}/transactions`);
       collectionData(ref, { idField: 'id' }).subscribe((data) => {
-        this.transactions = (data as Transaction[]).sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
+        const txs = data as Transaction[];
+        this.transactions = txs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+        this.totalIncome = txs
+          .filter(t => t.type === 'income')
+          .reduce((sum, t) => sum + Number(t.amount), 0);
+
+        this.totalExpenses = txs
+          .filter(t => t.type === 'expense')
+          .reduce((sum, t) => sum + Number(t.amount), 0);
       });
     });
   }

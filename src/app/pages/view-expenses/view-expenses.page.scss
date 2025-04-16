@@ -82,11 +82,45 @@
 
   .trash-icon {
   font-size: 20px;
-  color: #ff0000;        // Bright red
+  color: #ff0000;      
   margin-left: 8px;
   cursor: pointer;
-  opacity: 1 !important; // Force full visibility
-  pointer-events: auto;  // Ensure it's clickable
+  pointer-events: auto;  
+}
+
+.totals-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 20px 0;
+  padding: 0 16px;
+}
+
+.total-card {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+}
+
+.total-card.income {
+  background-color: #2e7d32; // green
+}
+
+.total-card.expense {
+  background-color: #c62828; // red
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.amount {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 
@@ -115,4 +149,26 @@
     min-width: 200px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   }
+
+  ion-item.expense-row {
+    --background: #ffffff; // default white
+    transition: background 0.3s ease;
+  }
+  
+  ion-item.expense-row.odd {
+    --background: #e6e6e6; // light gray
+  }
+  
+  ion-item .col {
+    color: #000;
+  }
+  
+  ion-item .income {
+    color: green;
+  }
+  
+  ion-item .expense {
+    color: red;
+  }
+  
   
